@@ -1,0 +1,58 @@
+{
+	"name": "Default",
+	"build": {
+		"dockerfile": "./Dockerfile",
+		"context": "."
+	},
+
+	"features": {
+		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+			"version": "20.10",
+			"enableNonRootDocker": "true",
+			"moby": "true"
+		}
+	},
+
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"mhutchie.git-graph",
+				"eamodio.gitlens",
+				"ms-python.python",
+				"ms-azuretools.vscode-docker",
+				"ms-vscode.makefile-tools",
+				"alefragnani.Bookmarks"
+			]
+		}
+	},
+
+	"mounts": [
+		{
+            "source": "${localEnv:HOME}/.ssh",
+            "target": "/home/developer/.ssh",
+            "type": "bind"
+        },
+		{
+			"source": "${localEnv:HOME}/.gitconfig",
+			"target": "/home/developer.gitconfig",
+			"type": "bind"
+		},
+		{
+			"source": "/etc/hosts",
+			"target": "/etc/hosts.host",
+			"type": "bind"
+		},
+		{
+			"source": "/etc/resolv.conf",
+			"target": "/etc/resolv.host.conf",
+			"type": "bind"
+		}
+	],
+
+	"postStartCommand": "sudo ./.devcontainer/poststart.sh",
+
+	"workspaceMount": "source=${localWorkspaceFolder},target=${localWorkspaceFolder},type=bind",
+	"workspaceFolder": "${localWorkspaceFolder}",
+
+	"remoteUser": "developer"
+}
