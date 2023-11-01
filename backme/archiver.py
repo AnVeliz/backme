@@ -37,6 +37,7 @@ def archive_folder(source_folder: str, target_folder: str, skip_patterns: list) 
 
 def main():
     parser = argparse.ArgumentParser(description="Archive a folder into a tar.gz file")
+    parser.add_argument("-y", "--yes", action="store_true", help="Do not ask to cofirm the operation")
     parser.add_argument("-f", "--folder", default="./data", help="Folder to archive")
     parser.add_argument("-t", "--target", default="./data_archive/", help="Target folder for the archive")
     parser.add_argument("-s", "--skip", default=["**/node_modules/*"], nargs="+", help="Skip patterns using wildcards (* and ?)")
@@ -47,10 +48,11 @@ def main():
     print(f"Target folder: {args.target}")
     print(f"Skip patterns: {args.skip}")
 
-    choice = input("Press Y to start the archiving process (or any other key to cancel): ")
-    if choice.lower() != "y":
-        print("Archiving process canceled.")
-        return
+    if not args.yes:
+        choice = input("Press Y to start the archiving process (or any other key to cancel): ")
+        if choice.lower() != "y":
+            print("Archiving process canceled.")
+            return
 
     archive_file = archive_folder(args.folder, args.target, args.skip)
     print(f"Archiving completed. Archive file created at: {archive_file}")
