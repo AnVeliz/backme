@@ -1,4 +1,4 @@
-# Archiver
+# BackMe
 
 Python 3 must be installed as well as the `venv` module.
 
